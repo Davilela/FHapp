@@ -1,0 +1,32 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar class="toolbar-basico">
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="home"></ion-back-button>
+		</ion-buttons>
+    <p class="texto_tolbar">Login</p>
+	</ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="content-basico">
+  <div class="container-imagem">
+    <ion-img class="img-logo" src="../../../assets/icon/Logo.png"></ion-img>
+  </div>
+
+  <div class="container-login">
+    <h1 class="titulo-login-cad">Login</h1>
+    <ion-input [(ngModel)]="email" class="input-login-cad input-login" placeholder="Email">
+      <ion-icon class="icon-login-cad input-login" src="../../../assets/icon/email.svg" slot="start"></ion-icon>
+    </ion-input>
+    <ion-input [(ngModel)]="senha" class="input-login-cad input-login" placeholder="Senha" type="password">
+      <ion-icon class="icon-login-cad" src="../../../assets/icon/senha.svg" slot="start"></ion-icon>
+    </ion-input>
+  </div>
+  <div class="link">
+    <a (click)="redefinir()">Esqueci minha senha!</a>
+  </div>
+
+  <div class="container-botao">
+    <ion-button class="botao-login margin2" expand="block" (click)="realizarLogin()">Login</ion-button>
+  </div>
+</ion-content>

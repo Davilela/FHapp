@@ -1,0 +1,23 @@
+.container-imagem{
+    width: 100%;
+    align-items: center;
+    margin-bottom: -30px;
+}
+
+.img-logo{
+    width: 85%;
+    margin: auto;
+    margin-top: 15%;
+    margin-bottom: 20%;
+}
+
+.botao-cadastrar{
+    width: 55%;
+    margin: auto;
+    margin-top: 6%;
+    --background: black;
+    --border-radius: 10px;
+    text-transform: initial;
+    font-size: 17px;
+    font-weight: 700;
+}

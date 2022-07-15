@@ -1,0 +1,40 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar class="toolbar-basico">
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="principal"></ion-back-button>
+		</ion-buttons>
+    <p class="texto_tolbar">Sobre</p>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="content-basico">
+
+  <div class="item"><p>Informações</p></div>
+  <ion-card class="card">
+		<p class="nome-reza">Endereço</p>
+    <p class="texto-reza">Estado: <span class="vermelho">Minas Gerais</span></p>
+    <p class="texto-reza">Cidade: <span class="vermelho">Itajubá</span></p>
+		<p class="texto-reza">Rua: <span class="vermelho">Doutor Domiciano Costa Moreira</span></p>
+		<p class="texto-reza">Número: <span class="vermelho">210</span></p>
+    <p class="texto-reza">CEP: <span class="vermelho">37500202</span></p>
+
+	</ion-card>
+
+	<ion-card class="card">
+		<p class="nome-reza">Pix</p>
+    <p class="texto-reza">Chave: <span class="vermelho">fazherdeirositajuba@gmail.com</span></p>
+	<p class="texto-reza">Nome: <span class="vermelho">Adriano Maretti</span></p>
+	</ion-card>
+
+	
+	<div class="item"><p>Contas da Rep</p></div>
+	
+	<ion-button class = "botao-relatorio" *ngIf="user.adm=='adm'" (click)="adicionarConta()">Adicionar Conta</ion-button>
+  <ion-card class="card" *ngFor="let reza of listaContas">
+		<p class="nome-reza">{{reza.nome}}</p>
+		<p class="texto-reza">Conta: <span class="vermelho">{{reza.email}}</span></p>
+		<p class="texto-reza">Senha: <span class="vermelho">{{reza.senha}}</span></p>
+    <ion-button class = "botao-relatorio2" *ngIf="user.adm=='adm'" (click)="editarConta()">Editar</ion-button>
+	</ion-card>
+
+</ion-content>

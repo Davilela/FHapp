@@ -1,0 +1,76 @@
+.container-login{
+    width: 90%;
+    margin: auto;
+}
+
+.container-imagem{
+    width: 100%;
+    align-items: center;
+    margin-bottom: -30px;
+    margin-top: 5%;
+}
+
+.img-logo{
+    width: 70%;
+    margin: auto;
+}
+
+.link{
+    width: 90%;
+    margin: auto;
+    text-align: right;
+}
+
+a{
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 12px;
+    text-decoration: none;
+}
+
+.container-botao{
+    margin-top: 20px;
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+.botao-login{
+    width: 90%;
+    margin: auto;
+    --background: #237DD0;
+    --border-radius: 10px;
+    text-transform: capitalize;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+h2{
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 55px;
+    margin-bottom: -10px;
+}
+
+.botao-cadastrar{
+    width: 55%;
+    margin: auto;
+    margin-top: 8%;
+    --background: black;
+    --border-radius: 10px;
+    text-transform: initial;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.titulo-login-cad{
+    margin-top: 19%;
+	margin-left: 6%;
+	font-weight: 600;
+	font-size: 22px;
+	line-height: 28px;
+	color: #FFFFFF;
+    margin-bottom: 4%;
+ }

@@ -1,0 +1,13 @@
+<ion-content [fullscreen]="true">
+  <div class="content">
+
+    <img src="../../../assets/icon/Logo.png" class="logo">
+    <div>
+    <p class="paragrafo">Selecione seu interesse <span class="vermelho1">{{user.nome}}</span></p>
+    </div>
+    <ion-button class = "botao-relatorio" (click)="irRezas()">Rezas</ion-button>
+    <ion-button class = "botao-relatorio" (click)="irPenal()">Código Pingal</ion-button>
+    <ion-button class = "botao-relatorio" (click)="irSobre()">Sobre</ion-button>
+    <ion-button class = "botao-relatorio vermelho" (click)="deslogar()">Sair</ion-button>
+  </div>
+</ion-content>

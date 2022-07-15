@@ -24,3 +24,62 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.content-basico {
+    --background: #FFB600;
+    --background-size: cover;
+    z-index: 5;
+    position: sticky;
+  }
+  
+  .texto_tolbar {
+    z-index: 2;
+    margin-right: 10%;
+    width: 85%;
+    display: block;
+    text-align: center;
+    position: relative;
+  }
+  
+  .toolbar-basico{
+      --background: black;
+      color: #ffffff;
+      font-size: 22px;
+      text-align: center;
+  }
+  
+  .div-superior {
+    margin-top: 10px;
+    background-color: #ffffff;
+    color: black;
+    border-top-left-radius: 91px;
+    border-top-right-radius: 91px;
+    height: fit-content;
+    min-height: 100%;
+  }
+  
+  ion-toolbar {
+    --background: transparent;
+    --border-style: none;
+  }
+  
+  ion-back-button {
+    --color: #ffffff;
+  }
+  
+  .input-login-cad {
+    font-weight: 400;
+    font-size: 17px;
+    background-color: #aaaaad;
+    border-radius: 20px;
+    color: #000000;
+    margin-bottom: 15px;
+    box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .icon-login-cad {
+    margin-left: 9px;
+    width: 22px;
+  }
+  

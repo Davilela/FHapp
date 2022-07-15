@@ -1,0 +1,91 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar class="toolbar-basico">
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="principal"></ion-back-button>
+		</ion-buttons>
+    <p class="texto_tolbar">Código Pingal</p>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+	
+
+	<ion-grid class="grid2" *ngIf="!bixo">
+		<ion-row>
+		  <ion-col size="1"></ion-col>
+		  <ion-col
+			class="top-navigator-geral-gray"
+			size="4.5"
+			(click)="mudarBixo()"
+			>Geral</ion-col
+		  >
+		  <ion-col size="1"></ion-col>
+		  <ion-col class="top-navigator-geral-white" size="4.5"
+			>Bixos</ion-col
+		  >
+		  <ion-col size="1"></ion-col>
+		</ion-row>
+		<ion-row class="row-line">
+		  <ion-col class="bottom-line-nothing" size="0.5"></ion-col>
+		  <ion-col class="bottom-line" size="11"></ion-col>
+		  <ion-col class="bottom-line-nothing" size="0.5"></ion-col>
+		</ion-row>
+		<ion-row>
+		  <ion-col size="1"></ion-col>
+		  <ion-col size="4.5"></ion-col>
+		  <ion-col size="1"></ion-col>
+		  <ion-col size="4.5" class="bottom-line-green"></ion-col>
+		  <ion-col size="1"></ion-col>
+		</ion-row>
+	  </ion-grid>
+
+	  <ion-grid class="grid2" *ngIf="bixo">
+		<ion-row>
+		  <ion-col size="1"></ion-col>
+		  <ion-col class="top-navigator-geral-white" size="4.5"
+			>Geral</ion-col
+		  >
+		  <ion-col size="1"></ion-col>
+		  <ion-col
+			class="top-navigator-geral-gray"
+			size="4.5"
+			(click)="mudarGeral()"
+			>Bixos</ion-col
+		  >
+		  <ion-col size="1"></ion-col>
+		</ion-row>
+		<ion-row class="row-line">
+		  <ion-col class="bottom-line-nothing" size="0.5"></ion-col>
+		  <ion-col class="bottom-line" size="11"></ion-col>
+		  <ion-col class="bottom-line-nothing" size="0.5"></ion-col>
+		</ion-row>
+		<ion-row>
+		  <ion-col size="1"></ion-col>
+		  <ion-col size="4.5" class="bottom-line-green"></ion-col>
+		  <ion-col size="1"></ion-col>
+		  <ion-col size="4.5"></ion-col>
+		  <ion-col size="1"></ion-col>
+		</ion-row>
+	  </ion-grid>
+
+	  <ion-button class="botao-relatorio" (click)="adicionarRegra()" *ngIf="user.adm == 'adm'">Adicionar Regra</ion-button>
+	
+		<ion-grid class="grid">
+			<ion-row class="item" lines="none" *ngFor="let regra of listaRegras[0]?.regras; let i = index">
+				<ion-col class="span" size="1.1">
+					{{i+1}}.
+				</ion-col>
+				<ion-col size="7.9">
+					{{regra?.titulo}}
+				</ion-col>
+				<ion-col size="3" class="punicao">
+					{{regra?.titulo=='Empatar foda'? 'Vento': ''}} {{regra?.titulo=='Quebrou copo' || regra?.titulo == 'Não bebeu até domingo' ? '' : '+'}} {{regra?.titulo=='Quebrou copo' ? 'Morte' : '' + regra?.punicao}} 
+					
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+
+		
+	
+
+</ion-content>

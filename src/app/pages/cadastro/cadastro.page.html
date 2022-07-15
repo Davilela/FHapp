@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar class="toolbar-basico">
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="home"></ion-back-button>
+		</ion-buttons>
+    <p class="texto_tolbar">cadastro</p>
+	</ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="content-basico">
+	<div class="container-imagem">
+		<ion-img
+			class="img-logo"
+			src="../../../assets/icon/Logo.png"
+		></ion-img>
+	</div>
+
+	<div class="container-login">
+		<h1 class="titulo-login-cad">Cadastre-se</h1>
+		<ion-input [(ngModel)]='user.nome' class="input-login-cad" placeholder="Nome">
+			<ion-icon
+				class="icon-login-cad"
+				src="../../../assets/icon/person.svg"
+				slot="start"
+			></ion-icon>
+		</ion-input>
+    <ion-input [(ngModel)]='user.email' class="input-login-cad" placeholder="Email">
+			<ion-icon
+				class="icon-login-cad"
+				src="../../../assets/icon/email.svg"
+				slot="start"
+			></ion-icon>
+		</ion-input>
+    <ion-input [(ngModel)]='senha' class="input-login-cad" placeholder="Senha">
+			<ion-icon
+				class="icon-login-cad"
+				src="../../../assets/icon/senha.svg"
+				slot="start"
+			></ion-icon>
+		</ion-input>
+	</div>
+
+  <div class="container-botao">
+		<ion-button class="botao-cadastrar" expand="block" (click) = "realizarCadastro()">Cadastrar</ion-button>
+
+	</div>
+</ion-content>

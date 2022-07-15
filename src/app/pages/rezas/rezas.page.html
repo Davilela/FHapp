@@ -1,0 +1,27 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar class="toolbar-basico">
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="principal"></ion-back-button>
+		</ion-buttons>
+    <p class="texto_tolbar">Rezas</p>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="content-basico">
+	<ion-button *ngIf="user.adm == 'adm'" class="botao-relatorio" (click)="adicionarReza()">Adicionar Regra</ion-button>
+	<ion-searchbar
+    showClearButton="never"
+    placeholder="Buscar"
+    (keyup)="filtrar($event)"
+    class="busca"
+    [(ngModel)]="search"
+  ></ion-searchbar>
+
+	<ion-card class="card" *ngFor="let reza of listaRezas[0]?.rezas">
+		<p class="nome-reza">{{reza.titulo}}</p>
+		<p class="texto-reza">{{reza.reza}}</p>
+		<p class="pessoa">{{reza.autor}}</p>
+		<ion-button class = "botao-relatorio2" *ngIf="user.adm=='adm'" (click)="editarReza()">Editar</ion-button>
+	</ion-card>
+
+</ion-content>
