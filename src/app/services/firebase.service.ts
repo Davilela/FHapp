@@ -171,6 +171,22 @@ export class FirebaseService {
     }
   }
 
+  public async puxarContas() {
+    const loading = await this.loadingCtrl.create({
+      cssClass: 'my-custom-class',
+      message: 'Aguarde...',
+    });
+    await loading.present();
+    try {
+      await loading.dismiss();
+      return this.fireStore.collection('contas').get();
+    } catch (erro: any) {
+      console.log(erro);
+      this.toastService.showToast(FirebaseErrorHandler(erro));
+      await loading.dismiss();
+    }
+  }
+
   public async saveRegraBixo(data) {
     const loading = await this.loadingCtrl.create({
       cssClass: 'my-custom-class',
@@ -216,7 +232,7 @@ export class FirebaseService {
       await loading.dismiss();
       return this.fireStore
         .collection('contas')
-        .doc(data.id)
+        .doc('getContas')
         .set({ ...data });
     } catch (erro: any) {
       console.log(erro);
@@ -225,21 +241,7 @@ export class FirebaseService {
     }
   }
 
-  public async puxarContas() {
-    const loading = await this.loadingCtrl.create({
-      cssClass: 'my-custom-class',
-      message: 'Aguarde...',
-    });
-    await loading.present();
-    try {
-      await loading.dismiss();
-      return this.fireStore.collection('contas').get();
-    } catch (erro: any) {
-      console.log(erro);
-      this.toastService.showToast(FirebaseErrorHandler(erro));
-      await loading.dismiss();
-    }
-  }
+ 
 
   public async saveRezas(data) {
     const loading = await this.loadingCtrl.create({

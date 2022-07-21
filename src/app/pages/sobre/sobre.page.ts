@@ -13,16 +13,16 @@ import { ToastServiceService } from 'src/app/services/toast-service.service';
   styleUrls: ['./sobre.page.scss'],
 })
 export class SobrePage implements OnInit {
-  conta : {
-    email: string,
-    senha: string,
-    nome: string
+  conta: {
+    email: string;
+    senha: string;
+    nome: string;
   } = {
     email: '',
     senha: '',
-    nome: ''
-  }
-  listaContas: any = [];
+    nome: '',
+  };
+  listaContas = [];
 
   user = {} as User;
   constructor(
@@ -31,7 +31,7 @@ export class SobrePage implements OnInit {
     private route: ActivatedRoute,
     public alertController: AlertController,
     private toast: ToastServiceService,
-    private fireService: FirebaseService,
+    private fireService: FirebaseService
   ) {
     this.route.params.subscribe(() => {
       this.store.getStorage().then((resp) => {
@@ -46,13 +46,13 @@ export class SobrePage implements OnInit {
         this.user.adm = userIntermediario.adm;
       });
     });
-   }
+  }
 
-   adicionarConta(){
+  adicionarConta() {
     this.alertEdicao();
-   }
+  }
 
-   async alertEdicao() {
+  async alertEdicao() {
     const alert = await this.alertController.create({
       header: 'Adicionar uma nova conta',
       inputs: [
@@ -83,16 +83,21 @@ export class SobrePage implements OnInit {
           id: 'confirm-button',
           handler: (bla) => {
             if (!!bla.name1 && !!bla.name2 && !!bla.name3) {
-              this.conta.senha= bla.name2;
+              this.conta.senha = bla.name2;
               this.conta.email = bla.name1;
               this.conta.nome = bla.name3;
-              console.log(this.conta);
-              this.fireService.saveConta(this.conta).then(
-                this.listaContas.push(this.conta)
+              let lista = { contas: [] };
+              this.listaContas.push(this.conta);
+              this.listaContas.forEach(element => {
+                lista.contas.push(element);                
+              });
+              this.fireService.saveConta(lista)
+        
+              this.conta = { nome: '', email: '', senha: '' };
+            } else {
+              this.toast.showToast(
+                'Entre com os dados para fazer essas operação!!'
               );
-              this.conta = {nome: '', email: '', senha: ''};
-            }else{
-              this.toast.showToast("Entre com os dados para fazer essas operação!!")
             }
           },
         },
@@ -101,23 +106,26 @@ export class SobrePage implements OnInit {
     await alert.present();
   }
 
-  async alertEdicaoConta() {
+  async alertEdicaoConta(index) {
     const alert = await this.alertController.create({
-      header: 'Editar a conta',
+      header: 'Editar conta',
       inputs: [
         {
           name: 'name3',
           type: 'text',
+          value: this.listaContas[index].nome,
           placeholder: 'Nome do aplicativo',
         },
         {
           name: 'name1',
           type: 'text',
+          value: this.listaContas[index].email,
           placeholder: 'Email',
         },
         {
           name: 'name2',
           type: 'text',
+          value: this.listaContas[index].senha,
           placeholder: 'Senha',
         },
       ],
@@ -127,21 +135,44 @@ export class SobrePage implements OnInit {
           role: 'cancel',
           id: 'cancel-button',
         },
+
+        {
+          text: 'Deletar',
+          role: 'deletar',
+          id: 'cancel-button',
+          handler: () => {
+            let lista = { contas : []};
+
+            console.log(this.listaContas);
+            this.listaContas.splice(index, 1);
+            console.log(this.listaContas);
+            
+            this.listaContas.forEach((element)=>{
+              lista.contas.push(element);
+            });
+            this.fireService.saveConta(lista);
+          }
+        },
         {
           text: 'Confirmar',
           id: 'confirm-button',
           handler: (bla) => {
             if (!!bla.name1 && !!bla.name2 && !!bla.name3) {
-              this.conta.senha= bla.name2;
+              this.conta.senha = bla.name2;
               this.conta.email = bla.name1;
               this.conta.nome = bla.name3;
-              console.log(this.conta);
-              this.fireService.saveConta(this.conta).then(
-                this.listaContas.push(this.conta)
+              let lista = { contas : []};
+              this.listaContas[index] = this.conta;
+              this.listaContas.forEach((element)=>{
+                lista.contas.push(element);
+              });
+              console.log(lista);
+              
+              this.fireService.saveConta(lista);
+            } else {
+              this.toast.showToast(
+                'Entre com os dados para fazer essas operação!!'
               );
-              this.conta = {nome: '', email: '', senha: ''};
-            }else{
-              this.toast.showToast("Entre com os dados para fazer essas operação!!")
             }
           },
         },
@@ -150,17 +181,26 @@ export class SobrePage implements OnInit {
     await alert.present();
   }
 
-  async editarConta(){
-    this.alertEdicaoConta();
+  async editarConta(index) {
+    this.alertEdicaoConta(index);
   }
 
   async ngOnInit() {
-    await	(await this.fireService.puxarContas()).subscribe((listaRelatorios) => {
+    await this.recebeRelatorios();
+  }
+
+  async recebeRelatorios() {
+    await (
+      await this.fireService.puxarContas()
+    ).subscribe((listaRelatorios) => {
+      let listaAx = [];
       listaRelatorios.forEach((doc: any) => {
-        this.listaContas.push(doc.data());
+        listaAx.push(doc.data());
       });
-      console.log(this.listaContas);
-      
+      listaAx[0]?.contas.forEach((element) => {
+        this.listaContas.push(element);
+      });
     });
-}
+    // console.log(this.listaContas);
+  }
 }

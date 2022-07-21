@@ -70,8 +70,11 @@
 
 	  <ion-button class="botao-relatorio" (click)="adicionarRegra()" *ngIf="user.adm == 'adm'">Adicionar Regra</ion-button>
 	
+
+	  <p class='text' *ngIf="user.adm == 'adm'">Para editar aperte na regra</p>
+
 		<ion-grid class="grid">
-			<ion-row class="item" lines="none" *ngFor="let regra of listaRegras[0]?.regras; let i = index">
+			<ion-row class="item" lines="none" *ngFor="let regra of listaRegras; let i = index" (click)="editar(i)">
 				<ion-col class="span" size="1.1">
 					{{i+1}}.
 				</ion-col>

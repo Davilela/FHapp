@@ -30,11 +30,11 @@
 	<div class="item"><p>Contas da Rep</p></div>
 	
 	<ion-button class = "botao-relatorio" *ngIf="user.adm=='adm'" (click)="adicionarConta()">Adicionar Conta</ion-button>
-  <ion-card class="card" *ngFor="let reza of listaContas">
+  <ion-card class="card" *ngFor="let reza of listaContas; let i = index">
 		<p class="nome-reza">{{reza.nome}}</p>
 		<p class="texto-reza">Conta: <span class="vermelho">{{reza.email}}</span></p>
 		<p class="texto-reza">Senha: <span class="vermelho">{{reza.senha}}</span></p>
-    <ion-button class = "botao-relatorio2" *ngIf="user.adm=='adm'" (click)="editarConta()">Editar</ion-button>
+    <ion-button class = "botao-relatorio2" *ngIf="user.adm=='adm'" (click)="editarConta(i)">Editar</ion-button>
 	</ion-card>
 
 </ion-content>

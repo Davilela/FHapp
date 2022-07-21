@@ -17,11 +17,11 @@
     [(ngModel)]="search"
   ></ion-searchbar>
 
-	<ion-card class="card" *ngFor="let reza of listaRezas[0]?.rezas">
+	<ion-card class="card" *ngFor="let reza of listaRezas; let i = index">
 		<p class="nome-reza">{{reza.titulo}}</p>
 		<p class="texto-reza">{{reza.reza}}</p>
 		<p class="pessoa">{{reza.autor}}</p>
-		<ion-button class = "botao-relatorio2" *ngIf="user.adm=='adm'" (click)="editarReza()">Editar</ion-button>
+		<ion-button class = "botao-relatorio2" *ngIf="user.adm=='adm'" (click)="editarReza(i)">Editar</ion-button>
 	</ion-card>
 
 </ion-content>

@@ -6,6 +6,7 @@ import { NavegacaoService } from 'src/app/services/navegacao.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/interface/user';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-penal',
@@ -56,21 +57,32 @@ export class PenalPage implements OnInit {
   }
 
   async recebeRelatorios() {
+    let geralAux = [];
     await (
       await this.fireService.puxarRegrasGeral()
     ).subscribe((listaRelatorios) => {
       listaRelatorios.forEach((doc: any) => {
-        this.listaGeral.push(doc.data());
+        geralAux.push(doc.data());
+      });
+      geralAux[0]?.regras.forEach((element) => {
+        this.listaGeral.push(element);
       });
     });
 
+
+    let bixosAux = [];
     await (
       await this.fireService.puxarRegrasBixos()
     ).subscribe((listaRelatorios) => {
       listaRelatorios.forEach((doc: any) => {
-        this.listaBixo.push(doc.data());
+        bixosAux.push(doc.data());
+      });
+      bixosAux[0]?.regras.forEach((element) => {
+        this.listaBixo.push(element);
       });
     });
+
+    
   }
 
   mudarGeral() {
@@ -123,14 +135,20 @@ export class PenalPage implements OnInit {
               aux.punicao = bla.name2;
               aux.titulo = bla.name1;
               if (this.bixo == false) {
-                this.listaBixo[0].regras?.push(aux);
-                this.fireService.saveRegraBixo(this.listaBixo[0]);
-                console.log("Entrou no bixos");
+                let lista = { regras : []};
+                this.listaBixo.push(aux);
+                this.listaBixo.forEach((element)=>{
+                lista.regras.push(element);
+                });
+                this.fireService.saveRegraBixo(lista);
               }
               else if(this.bixo == true){
-                this.listaGeral[0].regras?.push(aux);
-                this.fireService.saveRegraGeral(this.listaGeral[0]);
-                console.log("Entrou no geral");
+                let lista = { regras : []};
+                this.listaGeral.push(aux);
+                this.listaGeral.forEach((element)=>{
+                lista.regras.push(element);
+                });
+                this.fireService.saveRegraGeral(lista);
               }
             }else{
               this.toast.showToast("Entre com os dados para fazer essas operação!!")
@@ -140,5 +158,92 @@ export class PenalPage implements OnInit {
       ],
     });
     await alert.present();
+  }
+
+  
+  async alertEdicao2(index) {
+    const alert = await this.alertController.create({
+      header: 'Editar regra',
+      inputs: [
+        {
+          name: 'name1',
+          type: 'text',
+          value: this.listaRegras[index].titulo,
+          placeholder: 'Nome da regra',
+        },
+        {
+          name: 'name2',
+          type: 'text',
+          value: this.listaRegras[index].punicao,
+          placeholder: 'Valor da punição',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          id: 'cancel-button',
+        },
+        {
+          text: 'Deletar',
+          id: 'cancel-button',
+          handler: (bla) => {
+            if (this.bixo == false) {
+              let lista = { regras : []};
+              this.listaBixo.splice(index, 1);
+              this.listaBixo.forEach((element)=>{
+              lista.regras.push(element);
+              });
+              this.fireService.saveRegraBixo(lista);
+            }
+            else if (this.bixo == true) {
+              let lista = { regras : []};
+              this.listaGeral.splice(index, 1);
+              this.listaGeral.forEach((element)=>{
+              lista.regras.push(element);
+              });
+              this.fireService.saveRegraGeral(lista);
+            }
+          }
+        },
+        {
+          text: 'Confirmar',
+          id: 'confirm-button',
+          handler: (bla) => {
+            if (!!bla.name1 && !!bla.name2) {
+              this.regra.titulo = bla.name1;
+              this.regra.punicao = bla.name2;
+              if (this.bixo == false) {
+                let lista = { regras : []};
+                this.listaBixo[index] = this.regra;
+                this.listaBixo.forEach((element)=>{
+                lista.regras.push(element);
+                });
+                this.fireService.saveRegraBixo(lista);
+              }
+              else if (this.bixo == true) {
+                let lista = { regras : []};
+                this.listaGeral[index] = this.regra;
+                this.listaGeral.forEach((element)=>{
+                lista.regras.push(element);
+                });
+                this.fireService.saveRegraGeral(lista);
+              }
+            } else {
+              this.toast.showToast(
+                'Entre com os dados para fazer essas operação!!'
+              );
+            }
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  async editar(index){
+    if(this.user.adm == 'adm'){
+    this.alertEdicao2(index);
+    }
   }
 }
