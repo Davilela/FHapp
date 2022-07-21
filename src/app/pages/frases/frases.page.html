@@ -3,12 +3,12 @@
 		<ion-buttons slot="start">
 			<ion-back-button defaultHref="principal"></ion-back-button>
 		</ion-buttons>
-    <p class="texto_tolbar">Rezas</p>
+    <p class="texto_tolbar">Frases</p>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="content-basico">
-	<ion-button *ngIf="user.adm == 'adm'" class="botao-relatorio" (click)="adicionarReza()">Adicionar Rezas</ion-button>
+	<ion-button *ngIf="user.adm == 'adm'" class="botao-relatorio" (click)="adicionarReza()">Adicionar Frase</ion-button>
 	<ion-searchbar
     showClearButton="never"
     placeholder="Buscar"
@@ -17,10 +17,9 @@
     [(ngModel)]="search"
   ></ion-searchbar>
 
-	<ion-card class="card" *ngFor="let reza of listaRezas; let i = index">
-		<p class="nome-reza">{{reza.titulo}}</p>
-		<p class="texto-reza">{{reza.reza}}</p>
-		<p class="pessoa">{{reza.autor}}</p>
+	<ion-card class="card" *ngFor="let frase1 of listaFrases; let i = index">
+		<p class="nome-reza">{{frase1.autor}}</p>
+		<p class="texto-reza">{{frase1.frase}}</p>
 		<ion-button class = "botao-relatorio2" *ngIf="user.adm=='adm'" (click)="editarReza(i)">Editar</ion-button>
 	</ion-card>
 

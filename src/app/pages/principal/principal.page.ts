@@ -42,10 +42,12 @@ export class PrincipalPage implements OnInit {
   }
 
   deslogar() {
-    this.nav.navegarPara('login');
     this.store.limparUserStorage({ key: 'user' });
+    this.nav.navegarPara('home');
   }
-
+  irFrases(){
+    this.nav.navegarPara('frases');
+  }
   irSobre() {
     this.nav.navegarPara('sobre');
   }

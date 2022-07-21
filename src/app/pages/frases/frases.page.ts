@@ -1,22 +1,22 @@
-import { AlertController } from '@ionic/angular';
-import { FirebaseService } from 'src/app/services/firebase.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastServiceService } from 'src/app/services/toast-service.service';
+import { AlertController } from '@ionic/angular';
+import { User } from 'src/app/interface/user';
+import { FirebaseService } from 'src/app/services/firebase.service';
 import { NavegacaoService } from 'src/app/services/navegacao.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { User } from 'src/app/interface/user';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
-  selector: 'app-rezas',
-  templateUrl: './rezas.page.html',
-  styleUrls: ['./rezas.page.scss'],
+  selector: 'app-frases',
+  templateUrl: './frases.page.html',
+  styleUrls: ['./frases.page.scss'],
 })
-export class RezasPage implements OnInit {
-  listaRezas = [];
+export class FrasesPage implements OnInit {
+  listaFrases = [];
   listaPermanente = [];
   search: string;
-
+  
   user = {} as User;
   constructor(
     private fireService: FirebaseService,
@@ -41,34 +41,34 @@ export class RezasPage implements OnInit {
 
   async ngOnInit() {
     await this.recebeRelatorios();
-    this.listaPermanente = this.listaRezas;
+    this.listaPermanente = this.listaFrases;
   }
 
   async filtrar(event) {
     let listaAux = [];
     listaAux = this.listaPermanente;
-    this.listaRezas = listaAux;
+    this.listaFrases = listaAux;
     let valor = event.target.value;
 
     if (valor && valor.trim() != '') {
-      this.listaRezas = listaAux.filter((item) => {
-        return item.titulo.toLowerCase()?.indexOf(valor.toLowerCase()) > -1;
+      this.listaFrases = listaAux.filter((item) => {
+        return item.autor.toLowerCase()?.indexOf(valor.toLowerCase()) > -1;
       });
     } else {
-      this.listaRezas = this.listaPermanente;
+      this.listaFrases = this.listaPermanente;
     }
   }
 
   async recebeRelatorios() {
     await (
-      await this.fireService.puxarRezas()
+      await this.fireService.puxarFrases()
     ).subscribe((listaRelatorios) => {
       let listaAx = [];
       listaRelatorios.forEach((doc: any) => {
         listaAx.push(doc.data());
       });      
-      listaAx[0]?.rezas.forEach((element) => {
-        this.listaRezas.push(element);
+      listaAx[0]?.frases.forEach((element) => {
+        this.listaFrases.push(element);
       });
     });
   }
@@ -79,22 +79,17 @@ export class RezasPage implements OnInit {
 
   async alertCriacao() {
     const alert = await this.alertController.create({
-      header: 'Adicionar uma nova reza',
+      header: 'Adicionar uma nova frase',
       inputs: [
         {
           name: 'name1',
-          type: 'text',
-          placeholder: 'Titulo da reza',
-        },
-        {
-          name: 'name3',
           type: 'text',
           placeholder: 'Autor',
         },
         {
           name: 'name2',
           type: 'textarea',
-          placeholder: 'Reza',
+          placeholder: 'Frase',
         },
       ],
       buttons: [
@@ -107,27 +102,25 @@ export class RezasPage implements OnInit {
           text: 'Confirmar',
           id: 'confirm-button',
           handler: (bla) => {
-            let   reza: {
+            let aux : {
               autor: string;
-              reza: string;
-              titulo: string;
+              frase: string;
             } = {
               autor: '',
-              reza: '',
-              titulo: '',
+              frase: ''
             };
-            if (!!bla.name1 && !!bla.name2 && bla.name3) {
-              reza.reza = bla.name2;
-              reza.autor = bla.name3;
-              reza.titulo = bla.name1;
-              let lista = { rezas : []};
-              this.listaPermanente.push(reza);
+            if (!!bla.name1 && !!bla.name2) {
+              
+              aux.autor = bla.name1;
+              aux.frase = bla.name2;
+              let lista = { frases : []};
+              this.listaPermanente.push(aux);
               this.listaPermanente.forEach((element)=>{
-                lista.rezas.push(element);
+                lista.frases.push(element);
               });
               console.log(lista);
               
-              this.fireService.saveRezas(lista);
+              this.fireService.saveFrases(lista);
             } else {
               this.toast.showToast(
                 'Entre com os dados para fazer essas operação!!'
@@ -142,16 +135,10 @@ export class RezasPage implements OnInit {
 
   async alertEdicao(index) {
     const alert = await this.alertController.create({
-      header: 'Editar reza',
+      header: 'Editar frase',
       inputs: [
         {
           name: 'name1',
-          type: 'text',
-          value: this.listaPermanente[index]?.titulo,
-          placeholder: 'Titulo da reza',
-        },
-        {
-          name: 'name3',
           type: 'text',
           value: this.listaPermanente[index]?.autor,
           placeholder: 'Autor',
@@ -159,8 +146,8 @@ export class RezasPage implements OnInit {
         {
           name: 'name2',
           type: 'textarea',
-          value: this.listaPermanente[index]?.reza,
-          placeholder: 'Reza',
+          value: this.listaPermanente[index]?.frase,
+          placeholder: 'Frase',
         },
       ],
       buttons: [
@@ -173,41 +160,38 @@ export class RezasPage implements OnInit {
           text: 'Deletar',
           id: 'cancel-button',
           handler: (bla) => {
-            let lista = { rezas : []};
+            let lista = { frases : []};
             this.listaPermanente.splice(index, 1);
             console.log(this.listaPermanente);
             
             this.listaPermanente.forEach((element)=>{
-              lista.rezas.push(element);
+              lista.frases.push(element);
             });
-            this.fireService.saveRezas(lista);
+            this.fireService.saveFrases(lista);
           }
         },
         {
           text: 'Confirmar',
           id: 'confirm-button',
           handler: (bla) => {
-            let reza: {
+            let frase: {
               autor: string;
-              reza: string;
-              titulo: string;
+              frase: string;
             } = {
               autor: '',
-              reza: '',
-              titulo: '',
+              frase: '',
             };
-            if (!!bla.name1 && !!bla.name2 && bla.name3) {
-              reza.reza = bla.name2;
-              reza.autor = bla.name3;
-              reza.titulo = bla.name1;
-              let lista = { rezas : []};
-              this.listaPermanente[index] = reza;
+            if (!!bla.name1 && !!bla.name2) {
+              frase.frase = bla.name2;
+              frase.autor = bla.name1;
+              let lista = { frases : []};
+              this.listaPermanente[index] = frase;
               this.listaPermanente.forEach((element)=>{
-                lista.rezas.push(element);
+                lista.frases.push(element);
               });
               console.log(lista);
               
-              this.fireService.saveRezas(lista);
+              this.fireService.saveFrases(lista);
             } else {
               this.toast.showToast(
                 'Entre com os dados para fazer essas operação!!'
@@ -221,6 +205,8 @@ export class RezasPage implements OnInit {
   }
 
   editarReza(index) {
+    console.log(index);
+    
     this.alertEdicao(index);
   }
 }

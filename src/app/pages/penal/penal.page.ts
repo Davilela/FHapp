@@ -18,13 +18,7 @@ export class PenalPage implements OnInit {
   bixo: boolean = true;
   listaBixo = [];
   listaGeral = [];
-  regra: {
-    punicao: string;
-    titulo: string;
-  } = {
-    punicao: '',
-    titulo: '',
-  };
+  
   user = {} as User;
   constructor(
     private fireService: FirebaseService,
@@ -210,12 +204,19 @@ export class PenalPage implements OnInit {
           text: 'Confirmar',
           id: 'confirm-button',
           handler: (bla) => {
+            let regra: {
+              punicao: string;
+              titulo: string;
+            } = {
+              punicao: '',
+              titulo: '',
+            };
             if (!!bla.name1 && !!bla.name2) {
-              this.regra.titulo = bla.name1;
-              this.regra.punicao = bla.name2;
+              regra.titulo = bla.name1;
+              regra.punicao = bla.name2;
               if (this.bixo == false) {
                 let lista = { regras : []};
-                this.listaBixo[index] = this.regra;
+                this.listaBixo[index] = regra;
                 this.listaBixo.forEach((element)=>{
                 lista.regras.push(element);
                 });
@@ -223,7 +224,7 @@ export class PenalPage implements OnInit {
               }
               else if (this.bixo == true) {
                 let lista = { regras : []};
-                this.listaGeral[index] = this.regra;
+                this.listaGeral[index] = regra;
                 this.listaGeral.forEach((element)=>{
                 lista.regras.push(element);
                 });

@@ -139,6 +139,22 @@ export class FirebaseService {
     }
   }
 
+  public async puxarFrases() {
+    const loading = await this.loadingCtrl.create({
+      cssClass: 'my-custom-class',
+      message: 'Aguarde...',
+    });
+    await loading.present();
+    try {
+      await loading.dismiss();
+      return this.fireStore.collection('frases').get();
+    } catch (erro: any) {
+      console.log(erro);
+      this.toastService.showToast(FirebaseErrorHandler(erro));
+      await loading.dismiss();
+    }
+  }
+
   public async puxarRegrasGeral() {
     const loading = await this.loadingCtrl.create({
       cssClass: 'my-custom-class',
@@ -254,6 +270,25 @@ export class FirebaseService {
       return this.fireStore
         .collection('rezas')
         .doc('getRezas')
+        .set({ ...data });
+    } catch (erro: any) {
+      console.log(erro);
+      this.toastService.showToast(FirebaseErrorHandler(erro));
+      await loading.dismiss();
+    }
+  }
+
+  public async saveFrases(data) {
+    const loading = await this.loadingCtrl.create({
+      cssClass: 'my-custom-class',
+      message: 'Aguarde...',
+    });
+    await loading.present();
+    try {
+      await loading.dismiss();
+      return this.fireStore
+        .collection('frases')
+        .doc('getFrases')
         .set({ ...data });
     } catch (erro: any) {
       console.log(erro);

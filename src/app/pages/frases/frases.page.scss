@@ -1,0 +1,57 @@
+.pessoa{
+    color: #7E7E7E;
+
+}
+
+.card{
+    background-color: black;
+    text-align: center;
+}
+
+.nome-reza{
+    color: #FFB600;
+    margin-top: 3%;
+    font-size: 22px;
+    
+}
+
+.texto-reza{
+    color: #b8b8b8;
+    text-align: justify;
+    font-size: 18px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.botao-relatorio2{
+    display: block;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 3%;
+    --background: #FD2015;
+    --border-radius: 40px;
+    text-transform: initial;
+    font-size: 20px;
+    font-weight: 700;
+    height: 60px;
+    margin-top: 5%;
+}
+
+.busca{
+    --background: rgba(243, 251, 244, 0.8);
+    --border-radius: 20px;
+}
+
+.botao-relatorio{
+    display: block;
+    width: 80%;
+    margin: auto;
+    --background: black;
+    --border-radius: 40px;
+    text-transform: initial;
+    font-size: 20px;
+    font-weight: 700;
+    height: 60px;
+    margin-top: 5%;
+	margin-bottom: 5%;
+}

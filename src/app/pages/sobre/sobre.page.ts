@@ -13,15 +13,7 @@ import { ToastServiceService } from 'src/app/services/toast-service.service';
   styleUrls: ['./sobre.page.scss'],
 })
 export class SobrePage implements OnInit {
-  conta: {
-    email: string;
-    senha: string;
-    nome: string;
-  } = {
-    email: '',
-    senha: '',
-    nome: '',
-  };
+  
   listaContas = [];
 
   user = {} as User;
@@ -82,18 +74,26 @@ export class SobrePage implements OnInit {
           text: 'Confirmar',
           id: 'confirm-button',
           handler: (bla) => {
+            let conta: {
+              email: string;
+              senha: string;
+              nome: string;
+            } = {
+              email: '',
+              senha: '',
+              nome: '',
+            };
             if (!!bla.name1 && !!bla.name2 && !!bla.name3) {
-              this.conta.senha = bla.name2;
-              this.conta.email = bla.name1;
-              this.conta.nome = bla.name3;
+              conta.senha = bla.name2;
+              conta.email = bla.name1;
+              conta.nome = bla.name3;
               let lista = { contas: [] };
-              this.listaContas.push(this.conta);
+              this.listaContas.push(conta);
               this.listaContas.forEach(element => {
                 lista.contas.push(element);                
               });
               this.fireService.saveConta(lista)
-        
-              this.conta = { nome: '', email: '', senha: '' };
+              conta = { nome: '', email: '', senha: '' };
             } else {
               this.toast.showToast(
                 'Entre com os dados para fazer essas operação!!'
@@ -157,12 +157,21 @@ export class SobrePage implements OnInit {
           text: 'Confirmar',
           id: 'confirm-button',
           handler: (bla) => {
+            let conta: {
+              email: string;
+              senha: string;
+              nome: string;
+            } = {
+              email: '',
+              senha: '',
+              nome: '',
+            };
             if (!!bla.name1 && !!bla.name2 && !!bla.name3) {
-              this.conta.senha = bla.name2;
-              this.conta.email = bla.name1;
-              this.conta.nome = bla.name3;
+              conta.senha = bla.name2;
+              conta.email = bla.name1;
+              conta.nome = bla.name3;
               let lista = { contas : []};
-              this.listaContas[index] = this.conta;
+              this.listaContas[index] = conta;
               this.listaContas.forEach((element)=>{
                 lista.contas.push(element);
               });
